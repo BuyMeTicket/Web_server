@@ -18,7 +18,9 @@ import https from "https"
 const agent = new https.Agent({
   rejectUnauthorized: false
 })
-
+app.get("/test", (req, res) => {
+  res.send("Hello World!");
+});
 app.use(express.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }))
