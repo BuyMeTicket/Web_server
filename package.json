@@ -16,6 +16,7 @@
     "nodemon": "^3.0.1"
   },
   "scripts": {
-    "server": "nodemon server.js --ext js"
+    "server": "nodemon index.js --ext js",
+    "start": "node index.js"
   }
 }
