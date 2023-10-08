@@ -7,7 +7,6 @@ import multer from "multer";
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 5000;
 const API_URL = process.env.API_URL;
 const API_SECRET = process.env.API_SECRET; // Replace with your API secret
 const API_KEY = process.env.API_KEY; // this will be injected to index.html
@@ -113,8 +112,8 @@ app.get("/verify-signin", async (req, res) => {
   res.send(body);
 });
 
-app.listen(port, () => {
-  console.log("Server listening on ", port);
+app.listen( () => {
+  console.log("Server listening on ");
 });
 
 function getRandomInt(max) {
