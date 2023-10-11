@@ -19,21 +19,9 @@ const TicketSchema = new Schema({
     quantity: Number,
 });
 
-// import { buf2url } from './query.js'
-// TicketSchema.virtual('nftSrc').get(buf2url('nft'))
-TicketSchema.virtual('nft').get(async function () {
-    const activity = await Activity.findById(this.activity);
-    if (activity && activity.tickets){
-        const ticket = activity.tickets.find((ticket) => ticket.name === this.name);
-        if (ticket.nft.contentType === undefined) return '';
-        return `data:${ticket.nft.contentType};base64,${Buffer.from(ticket.nft.data).toString(
-            'base64',
-        )}`
-    }
-})
+
 TicketSchema.methods.getPublic = async function () {
     let obj = {...this._doc, _id: this._id.toString()}
-    obj['nft'] = await this.nft
     const activity = await Activity.findById(this.activity)
     delete obj['activity']
     obj['activity'] = await activity.getPublic()
