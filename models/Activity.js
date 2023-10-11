@@ -54,7 +54,7 @@ ActivitySchema.methods.getPublic = function () {
   obj['totalTickets'] = this.totalTickets
   obj['soldTickets'] = this.soldTickets
   obj['leftTickets'] = this.leftTickets
-  obj['tickets'] = tickets
+  obj['tickets'] = this.tickets
   return obj
 }
 
