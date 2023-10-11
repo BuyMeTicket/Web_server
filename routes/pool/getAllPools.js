@@ -2,7 +2,7 @@ import Pool from "../../models/Pool.js";
 
 const getAllPools = async (req, res) => {
     try {
-        const pools = await Pool.find({}).catch((err)=>{console.log(err)});
+        const pools = await Pool.find({});
         if (!pools) throw new Error("No pools found");
         res.send(pools.map(pool=>pool.getPublic()));
     } catch (error) {
