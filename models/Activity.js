@@ -15,10 +15,7 @@ const ActivitySchema = new Schema({
     },
     tickets: [{
       price: Number,
-      nft: {
-        data: Buffer,
-        contentType: String,
-      },
+      nft: String,
       totalAmount: Number,
       soldAmount: {
         type: Number,
@@ -51,22 +48,13 @@ ActivitySchema.virtual('tickets.nftSrc').get(buf2url('tickets.nft'))
 
 ActivitySchema.methods.getPublic = function () {
   let obj = {...this._doc, _id: this._id.toString()}
-  if(obj.tickets[0].nft.contentType){
-    const nftSrcs = obj.tickets.map((ticket)=>{
-      const key=ticket.nft
-      return `data:${key.contentType};base64,${Buffer.from(key.data).toString(
-        'base64',
-        )}`})
-        let tickets = obj.tickets.map((key,i)=>({...key._doc, nft: nftSrcs[i]}))
-        delete obj.tickets
-        obj['tickets'] = tickets
-  }
   delete obj.image
   obj['image'] = this.imgSrc
   obj['startSelling'] = this.startSelling
   obj['totalTickets'] = this.totalTickets
   obj['soldTickets'] = this.soldTickets
   obj['leftTickets'] = this.leftTickets
+  obj['tickets'] = tickets
   return obj
 }
 

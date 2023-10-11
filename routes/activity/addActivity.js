@@ -4,8 +4,7 @@ import { parseFile } from "../../models/query.js";
 const addActivity = async (req, res) => {
     let tickets = JSON.parse(req.body.tickets);
     const image = parseFile(req.files[0]);
-    const nfts = parseFile(req.files.slice(1));
-    tickets = tickets.map((ticket, index)=>({...ticket, totalAmount:parseInt(ticket.totalAmount), nft: nfts[index]}));
+    tickets = tickets.map((ticket, index)=>({...ticket, totalAmount:parseInt(ticket.totalAmount)}));
     const totalTickets = tickets.reduce((acc,ticket)=>acc+ticket.totalAmount,0);
     const data = {...req.body, tickets, image, totalTickets };
     try {
