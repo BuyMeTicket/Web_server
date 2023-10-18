@@ -6,7 +6,7 @@ const addActivity = async (req, res) => {
     const totalTickets = tickets.reduce((acc,ticket)=>acc+ticket.totalAmount,0);
     const data = {...req.body, tickets, totalTickets };
     try {
-        const newActivity =await new Activity({data}).save();
+        const newActivity =await new Activity(data).save();
         res.send('Activity added');
     } catch (error) {
         res.status(400).send(error.message);
