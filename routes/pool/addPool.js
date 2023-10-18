@@ -1,9 +1,7 @@
 import Pool from "../../models/Pool.js";
-import { parseFile } from "../../models/query.js";
 
 const addPool = async (req, res) => {
-    const image = parseFile(req.file);
-    const data = {...req.body, image};
+    const data = req.body;
     try {
         const newPool = await new Pool(data).save().catch(e=>console.log("error in add pool",e));
         res.send('Pool added');

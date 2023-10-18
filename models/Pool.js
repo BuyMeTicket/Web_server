@@ -1,13 +1,10 @@
-import mongoose from 'mongoose';   
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 const PoolSchema = new Schema({
     address: String,
     title: String,
     description: String,
-    image: {
-        data: Buffer,
-        contentType: String,
-    },
+    image: String,
     startTime: Date,
     endTime: Date,
     targetPrice: Number,
@@ -30,11 +27,16 @@ const PoolSchema = new Schema({
 });
 import { buf2url, kConverter } from './query.js'
 PoolSchema.virtual('imgSrc').get(buf2url())
-
+PoolSchema.virtual('startFunding').get(function () {
+    return this.startTime.getTime() < Date.now() && this.endTime.getTime() > Date.now()
+})
+PoolSchema.virtual('endFunding').get(function () {
+    return this.endTime.getTime() < Date.now()
+})
 PoolSchema.methods.getPublic = function () {
-    let obj = {...this._doc, _id: this._id.toString()}
-    delete obj.image
-    obj['image'] = this.imgSrc
+    let obj = { ...this._doc, _id: this._id.toString() }
+    obj['startFunding'] = this.startFunding
+    obj['endFunding'] = this.endFunding
     obj['currentPrice'] = kConverter(obj['currentPrice'])
     obj['targetPrice'] = kConverter(obj['targetPrice'])
     return obj
