@@ -3,10 +3,7 @@ const Schema = mongoose.Schema;
 const ActivitySchema = new Schema({
     title: String,
     description: String,
-    image: {
-      data: Buffer,
-      contentType: String,
-    },
+    image: String,
     date: Date,
     address: String,
     watches: {
@@ -34,6 +31,9 @@ ActivitySchema.virtual('imgSrc').get(buf2url())
 ActivitySchema.virtual('startSelling').get(function(){
   return this.startSellTime.getTime() < Date.now() && this.endSellTime.getTime() > Date.now()
 })
+ActivitySchema.virtual('endSelling').get(function(){
+  return this.endSellTime.getTime() < Date.now()
+})
 ActivitySchema.virtual('totalTickets').get(function(){
   return this.tickets.reduce((acc,cur)=>acc+cur.totalAmount,0)
 })
@@ -48,9 +48,8 @@ ActivitySchema.virtual('tickets.nftSrc').get(buf2url('tickets.nft'))
 
 ActivitySchema.methods.getPublic = function () {
   let obj = {...this._doc, _id: this._id.toString()}
-  delete obj.image
-  obj['image'] = this.imgSrc
   obj['startSelling'] = this.startSelling
+  obj['endSelling'] = this.endSelling
   obj['totalTickets'] = this.totalTickets
   obj['soldTickets'] = this.soldTickets
   obj['leftTickets'] = this.leftTickets

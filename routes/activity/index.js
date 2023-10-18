@@ -1,5 +1,4 @@
 import express from "express";
-import fileProcess from "../../middleware/fileProcess.js";
 
 const router = express.Router();
 import addActivity from "./addActivity.js";
@@ -10,8 +9,8 @@ import updateActivity from "./updateActivity.js";
 import deleteActivity from "./deleteActivity.js";
 
 router.get("/", getOneActivity)
-router.post("/add", fileProcess('files[]'), addActivity)
-router.put("/update", fileProcess('files[]'), updateActivity)
+router.post("/add", addActivity)
+router.put("/update", updateActivity)
 router.get("/all", getAllActivities)
 router.get("/own", getOwnActivity)
 router.delete("/delete", deleteActivity)
