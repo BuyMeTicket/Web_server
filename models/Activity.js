@@ -41,8 +41,6 @@ ActivitySchema.virtual('soldTickets').get(function(){
 ActivitySchema.virtual('leftTickets').get(function(){
   return this.tickets.reduce((acc,cur)=>acc+cur.totalAmount-cur.soldAmount,0)
 })
-// use virtual fields to get nft src url of every ticket
-ActivitySchema.virtual('tickets.nftSrc').get(buf2url('tickets.nft'))
 
 ActivitySchema.methods.getPublic = function () {
   let obj = {...this._doc, _id: this._id.toString()}
@@ -51,7 +49,7 @@ ActivitySchema.methods.getPublic = function () {
   obj['totalTickets'] = this.totalTickets
   obj['soldTickets'] = this.soldTickets
   obj['leftTickets'] = this.leftTickets
-  obj['tickets'] = this.tickets
+
   return obj
 }
 
