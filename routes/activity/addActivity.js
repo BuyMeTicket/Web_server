@@ -1,5 +1,4 @@
 import Activity from "../../models/Activity.js";
-import { parseFile } from "../../models/query.js";
 
 const addActivity = async (req, res) => {
     let tickets = JSON.parse(req.body.tickets);
@@ -7,7 +6,7 @@ const addActivity = async (req, res) => {
     const totalTickets = tickets.reduce((acc,ticket)=>acc+ticket.totalAmount,0);
     const data = {...req.body};
     try {
-        const newActivity =await new Activity({...data,totalTickets}).save().catch(e=>console.log("error in add activity",e));
+        const newActivity =await new Activity({...data,totalTickets}).save();
         res.send('Activity added');
     } catch (error) {
         res.status(400).send(error.message);
