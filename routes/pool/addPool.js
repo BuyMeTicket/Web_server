@@ -1,7 +1,7 @@
 import Pool from "../../models/Pool.js";
 
 const addPool = async (req, res) => {
-    const data = {...req.body};
+    const { data } = req.body;
     try {
         const newPool = await new Pool(data).save();
         res.send('Pool added');
