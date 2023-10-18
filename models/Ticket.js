@@ -9,6 +9,7 @@ const TicketSchema = new Schema({
         enum: ['available', 'used', 'others'],
         default: 'available',
     },
+    nft:String,
     name: String,
     ticketId: String,
     owner: String,
