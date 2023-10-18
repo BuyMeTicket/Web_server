@@ -25,8 +25,7 @@ const PoolSchema = new Schema({
         default: 0
     },
 });
-import { buf2url, kConverter } from './query.js'
-PoolSchema.virtual('imgSrc').get(buf2url())
+import { kConverter } from './query.js'
 PoolSchema.virtual('startFunding').get(function () {
     return this.startTime.getTime() < Date.now() && this.endTime.getTime() > Date.now()
 })

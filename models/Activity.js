@@ -26,8 +26,6 @@ const ActivitySchema = new Schema({
     eventAddress: String,
     eventId: String,
 });
-import { buf2url } from './query.js'
-ActivitySchema.virtual('imgSrc').get(buf2url())
 ActivitySchema.virtual('startSelling').get(function(){
   return this.startSellTime.getTime() < Date.now() && this.endSellTime.getTime() > Date.now()
 })
