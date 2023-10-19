@@ -6,6 +6,7 @@ import getOnePool from "./getOnePool.js";
 import donate from "./donate.js";
 import getFundPools from './getfundPools.js';
 import redeem from './redeem.js';
+import searchPool from './searchPool.js';
 
 const router = express.Router();
 router.post("/add", addPool)
@@ -15,6 +16,6 @@ router.get("/all", getAllPools)
 router.get("/", getOnePool)
 router.get("/fund",getFundPools)
 router.post("/redeem",redeem)
-
+router.get("/search", searchPool)
 
 export default router;

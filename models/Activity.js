@@ -42,6 +42,20 @@ ActivitySchema.virtual('leftTickets').get(function(){
   return this.tickets.reduce((acc,cur)=>acc+cur.totalAmount-cur.soldAmount,0)
 })
 
+ActivitySchema.statics.smartQuery = function (keywords) {
+  if (!keywords) return []
+  const reg = new RegExp(keywords.replace(' ', '|'), 'i')
+  //   console.log(reg)
+  const query = {
+    $or: [
+      { title: reg },
+      { description: reg },
+      { 'tickets.name': reg },
+    ],
+  }
+  return query
+}
+
 ActivitySchema.methods.getPublic = function () {
   let obj = {...this._doc, _id: this._id.toString()}
   obj['startSelling'] = this.startSelling
@@ -52,6 +66,7 @@ ActivitySchema.methods.getPublic = function () {
 
   return obj
 }
+
 
 const Activity = mongoose.model("Activity", ActivitySchema);
 export default Activity;

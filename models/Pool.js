@@ -32,6 +32,18 @@ PoolSchema.virtual('startFunding').get(function () {
 PoolSchema.virtual('endFunding').get(function () {
     return this.endTime.getTime() < Date.now()
 })
+
+PoolSchema.statics.smartQuery = function (keywords) {
+    if (!keywords) return []
+    const reg = new RegExp(keywords.replace(' ', '|'), 'i')
+    const query = {
+        $or: [
+            { title: reg },
+            { description: reg },
+        ],
+    }
+    return query
+}
 PoolSchema.methods.getPublic = function () {
     let obj = { ...this._doc, _id: this._id.toString() }
     obj['startFunding'] = this.startFunding
