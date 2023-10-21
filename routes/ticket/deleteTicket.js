@@ -1,12 +1,12 @@
 import Ticket from "../../models/Ticket.js";
 
 const deleteTicket = async (req, res) => {
-    console.log(req.params);
-    const {_id} = req.params;
-    const ticket = await Ticket.findByIdAndDelete({_id});
-    if (!ticket) {
-        res.status(404).send("Ticket not found");
-        return;
+    const { id } = req.body;  // Extract id from request body
+    try {
+        await Ticket.findByIdAndDelete(id);
+        res.status(200).send({ success: true });
+    } catch (error) {
+        res.status(500).send({ success: false, error });
     }
     res.send('delete success');
 }
