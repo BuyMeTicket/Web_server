@@ -11,7 +11,7 @@ router.post("/buy", buyTicket)
 router.get("/all", getAllTickets)
 router.get("/", getOneTicket)
 router.get("/own", getOwnTicket)
-router.delete("/delete", deleteTicket)
+router.delete("/delete/:id", deleteTicket)
 router.post("/use", useTicket)
 
 export default router;
