@@ -14,7 +14,6 @@ const decrypt = async (req, res) => {
         console.log(key);
         console.log(ciphertext);
         const decrypted = AES.decrypt(ciphertext, key);
-        console.log('de',decrypted);
         const originalText = decrypted.toString(encUtf8);
         console.log('origin',originalText);
         res.status(200).send(originalText);
